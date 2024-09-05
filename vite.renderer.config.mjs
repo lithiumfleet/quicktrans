@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { pluginExposeRenderer } from './vite.base.config.mjs';
 import vue from '@vitejs/plugin-vue';
+import path from 'path';
 
 // https://vitejs.dev/config
 export default defineConfig((env) => {
@@ -22,6 +23,10 @@ export default defineConfig((env) => {
       pluginExposeRenderer(name)
     ],
     resolve: {
+      alias: {
+        '@src': path.resolve(__dirname, './src'),
+        '@imgs': path.resolve(__dirname, './public/imgs')
+      },
       preserveSymlinks: true,
     },
     clearScreen: false,

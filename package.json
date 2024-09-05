@@ -2,7 +2,7 @@
   "name": "quicktrans",
   "productName": "quicktrans",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A translate tool.",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -33,6 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
-    "vue": "^3.5.1"
+    "vue": "^3.5.1",
+    "vue-router": "^4.4.3"
   }
 }

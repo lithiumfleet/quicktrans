@@ -13,6 +13,12 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      // Enable context isolation
+      contextIsolation: true, 
+      // Enable Node.js integration in preload.js
+      nodeIntegration: true,
+      // Enable the use of require in preload
+      enableRemoteModule: true
     },
   });
 

@@ -1,5 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+
+const { sendBaiduTrans } = require('D:/Quicktrans/quicktrans/src/translateBackend/baiduTrans.js')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -13,13 +15,6 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      // Enable context isolation
-      contextIsolation: true, 
-      // Enable Node.js integration in preload.js
-      nodeIntegration: true,
-      // Enable the use of require in preload
-      enableRemoteModule: true,
-      webSecurity: false
     },
   });
 
@@ -58,5 +53,16 @@ app.on('window-all-closed', () => {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+
+// Handler warpper
+function autoUnwarpArgs(fn) {
+  // wapper: auto unwarp args
+  function handler(event, ...args) {
+    return fn(...args)
+  }
+  return handler
+}
+
+// Add handlers for registed events here
+ipcMain.handle('baiduTrans', autoUnwarpArgs(sendBaiduTrans))
+

@@ -23,10 +23,21 @@ export const translateState = reactive({
 
     async translate() {
         if (this.src) {
-            this.dest = await window.translateAPI.baidutrans(this.src, 'auto', 'zh')
+            const { from, to } = this.autoDetect(this.src)
+            this.dest = await window.translateAPI.baidutrans(this.src, from, to)
         } else {
             this.dest = ""
         }
+    },
+
+    autoDetect(content) {
+        let lang = detectLanguage(content)
+        let tasks = {
+            en : 'zh',
+            jp : 'zh',
+            zh : 'en'
+        }
+        return { from: lang, to: tasks[lang]}
     },
 
     clear() {
@@ -34,3 +45,26 @@ export const translateState = reactive({
         this.dest = ""
     }
 })
+
+function detectLanguage(text) {
+    // thank you gpt :-)
+    const englishWordPattern = /\b[A-Za-z]+\b/g;  // Count English words
+    const chinesePattern = /[\u4E00-\u9FFF]/g;    // Count Chinese characters
+    const japaneseHiraganaPattern = /[\u3040-\u309F]/g;  // Count Hiragana
+    const japaneseKatakanaPattern = /[\u30A0-\u30FF]/g;  // Count Katakana
+    
+    const englishMatches = text.match(englishWordPattern) || [];
+    const chineseMatches = text.match(chinesePattern) || [];
+    const hiraganaMatches = text.match(japaneseHiraganaPattern) || [];
+    const katakanaMatches = text.match(japaneseKatakanaPattern) || [];
+
+    const counts = {
+        en: englishMatches.length * 2,
+        zh: chineseMatches.length,
+        jp: hiraganaMatches.length + katakanaMatches.length
+    };
+
+    const dominantLanguage = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    
+    return dominantLanguage;
+}

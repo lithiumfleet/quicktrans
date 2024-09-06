@@ -1,10 +1,11 @@
-const crypto = require('crypto');  // 用来生成 md5 的模块
-const querystring = require('querystring');  // 用来把对象转换为查询字符串的模块
+const crypto = require('crypto');
+const querystring = require('querystring');
+const process = require('process');
 
-const appid = '';  // 百度翻译的 AppID
-const apiKey = '';  // 百度翻译的 API Key
+const appid = process.env.baiduTransAppId;
+const apiKey = process.env.baiduTransApiKey;
 
-function new_request( q, from, to) {
+function new_request(q, from, to) {
     const salt = Math.floor(Math.random() * 1000);
     let sign = appid + q + salt + apiKey
     sign = crypto.createHash('md5').update(sign).digest('hex');
@@ -25,7 +26,7 @@ function new_request( q, from, to) {
 
 
 
-async function baidutrans(q, from, to) {
+async function sendBaiduTrans(q, from, to) {
     let request = new_request(q, from, to)
     let resp = await fetch(
         "https://fanyi-api.baidu.com/api/trans/vip/translate",
@@ -33,7 +34,8 @@ async function baidutrans(q, from, to) {
     )
     let data = await resp.json()
 
-    return data
+    let dest = data.trans_result[0].dst
+    return dest
 }
 
-export { baidutrans }
+exports.sendBaiduTrans = sendBaiduTrans;

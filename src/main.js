@@ -18,7 +18,8 @@ const createWindow = () => {
       // Enable Node.js integration in preload.js
       nodeIntegration: true,
       // Enable the use of require in preload
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      webSecurity: false
     },
   });
 

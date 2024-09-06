@@ -21,9 +21,9 @@ export const translateState = reactive({
     get src() { return this.srcLangContent },
     set src(val) { this.srcLangContent = val },
 
-    translate() {
+    async translate() {
         if (this.src) {
-            this.dest = window.translateAPI.translate(this.src)
+            this.dest = await window.translateAPI.baidutrans(this.src, 'auto', 'zh')
         } else {
             this.dest = ""
         }

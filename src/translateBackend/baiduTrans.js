@@ -1,7 +1,3 @@
-const { contextBridge } = require('electron')
-const fs = require('fs');
-const path = require('path');
-
 const crypto = require('crypto');  // 用来生成 md5 的模块
 const querystring = require('querystring');  // 用来把对象转换为查询字符串的模块
 
@@ -40,26 +36,4 @@ async function baidutrans(q, from, to) {
     return data
 }
 
-function printsth(msg) {
-    console.log("Print Something", msg);
-}
-
-function readfile(file_path) {
-    let local_path = path.normalize(file_path)
-    return fs.readFileSync(local_path).toString();
-}
-
-contextBridge.exposeInMainWorld(
-    'api',
-    {
-        printsth: (msg) => printsth(msg),
-        readfile: (path) => readfile(path)
-    }
-)
-
-contextBridge.exposeInMainWorld(
-    'translateAPI',
-    {
-        baidutrans
-    }
-)
+export { baidutrans }

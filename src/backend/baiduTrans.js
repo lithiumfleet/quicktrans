@@ -38,4 +38,4 @@ async function sendBaiduTrans(q, from, to) {
     return dest
 }
 
-exports.sendBaiduTrans = sendBaiduTrans;
+module.exports = sendBaiduTrans;

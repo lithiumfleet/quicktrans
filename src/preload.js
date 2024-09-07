@@ -16,3 +16,10 @@ contextBridge.exposeInMainWorld(
         baidutrans: (p, from, to) => ipcRenderer.invoke("baiduTrans", p, from, to)
     }
 )
+
+contextBridge.exposeInMainWorld(
+    'captureAPI',
+    {
+        captureScreen: (img_path) => ipcRenderer.invoke("captureScreen", img_path)
+    }
+)

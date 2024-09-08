@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import { translateState } from '../States';
+import { translateState } from './States';
 
 
 </script>

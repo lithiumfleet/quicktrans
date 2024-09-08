@@ -6,7 +6,7 @@ let screenWidth = screenHeight = 0
 
 // update screen width and height when app ready
 app.whenReady().then(() => {
-    const { screen } = require('electron')
+    const { screen } = require('electron/main')
     const primaryDisplay = screen.getPrimaryDisplay()
     const { width, height } = primaryDisplay.size
     screenWidth = width
@@ -14,6 +14,7 @@ app.whenReady().then(() => {
 })
 
 async function captureScreen(img_path) {
+    console.debug(`current screenshot size: ${screenWidth}, ${screenHeight}`, )
     const sources = await desktopCapturer.getSources(
         { 
             types: ['screen'],

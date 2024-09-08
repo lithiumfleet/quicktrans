@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
     'captureAPI',
     {
-        captureScreen: (img_path) => ipcRenderer.invoke("captureScreen", img_path)
+        captureScreen: (img_path) => ipcRenderer.invoke("captureScreen", img_path),
+        getWindowInfo: () => ipcRenderer.invoke("getWindowInfo")
     }
 )

@@ -90,3 +90,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# thumbnail img
+thumbnail.png

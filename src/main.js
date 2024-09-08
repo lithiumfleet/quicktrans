@@ -1,9 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 
-const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js');
-const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture');
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -63,6 +60,9 @@ function autoUnwarpArgs(fn) {
   }
   return handler
 }
+
+const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js');
+const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture');
 
 // Add handlers for registed events here
 ipcMain.handle('baiduTrans', autoUnwarpArgs(baiduTrans))

@@ -4,6 +4,7 @@ const fs = require('fs')
 
 let screenWidth = screenHeight = 0
 
+// update screen width and height when app ready
 app.whenReady().then(() => {
     const { screen } = require('electron')
     const primaryDisplay = screen.getPrimaryDisplay()
@@ -13,7 +14,6 @@ app.whenReady().then(() => {
 })
 
 async function captureScreen(img_path) {
-    console.log("screen: ", screenWidth, screenHeight)
     const sources = await desktopCapturer.getSources(
         { 
             types: ['screen'],
@@ -24,7 +24,7 @@ async function captureScreen(img_path) {
 
     const img = source.thumbnail.toPNG()
 
-    fs.writeFile(img_path, img, (err) => { console.log(`Error occur when capture screen: ${err}`)})
+    fs.writeFileSync(img_path, img)
 }
 
 module.exports = captureScreen

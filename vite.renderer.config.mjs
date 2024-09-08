@@ -25,7 +25,7 @@ export default defineConfig((env) => {
     resolve: {
       alias: {
         '@src': path.resolve(__dirname, './src'),
-        '@imgs': path.resolve(__dirname, './public/imgs')
+        '@imgs': path.resolve(__dirname, './src/imgs')
       },
       preserveSymlinks: true,
     },

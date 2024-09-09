@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld(
     'captureAPI',
     {
         captureScreen: (img_path) => ipcRenderer.invoke("captureScreen", img_path),
-        getWindowInfo: () => ipcRenderer.invoke("getWindowInfo")
+        getWindowInfo: () => ipcRenderer.invoke("getWindowInfo"),
+        areaOCR: (file_path, area) => ipcRenderer.invoke("areaOCR", file_path, area)
     }
 )

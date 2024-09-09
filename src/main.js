@@ -12,6 +12,7 @@ const createWindow = () => {
     width: 160,
     height: 48,
     minHeight: 48,
+    minWidth: 80,
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -65,12 +66,15 @@ function autoUnwarpArgs(fn) {
   return handler
 }
 
+// Regist functions in preload.js first!
 const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
 const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture')
 const getWindowInfo = require('D:/Quicktrans/quicktrans/src/backend/windowInfo')
+const areaOCR = require('D:/Quicktrans/quicktrans/src/backend/tesseractOCR')
 
 // Add handlers for registed events here
 ipcMain.handle('baiduTrans', autoUnwarpArgs(baiduTrans))
 ipcMain.handle('captureScreen', autoUnwarpArgs(captureScreen))
 ipcMain.handle('getWindowInfo', getWindowInfo)
+ipcMain.handle('areaOCR', autoUnwarpArgs(areaOCR))
 

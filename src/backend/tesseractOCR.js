@@ -3,7 +3,9 @@
 // this module don't provide desktop capture function
 const { createWorker } = require('tesseract.js');
 
-const worker = await createWorker(['eng', 'zh', 'jp']);
+let worker = undefined
+createWorker(['eng', 'chi_sim', 'jpn'])
+    .then((newWorker) => worker=newWorker)
 
 // input: 
 //     img_path: path to the captured desktop
@@ -15,4 +17,4 @@ async function areaOCR(file_path, area) {
     return text
 }
 
-exports.areaOCR = areaOCR
+module.exports = areaOCR

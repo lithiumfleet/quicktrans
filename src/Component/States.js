@@ -16,17 +16,17 @@ export const translateState = reactive({
     srcLangContent: "",
     destLangContent: "",
 
-    get dest() { return this.destLangContent },
-    set dest(val) { this.destLangContent = val },
+    get dst() { return this.destLangContent },
+    set dst(val) { this.destLangContent = val },
     get src() { return this.srcLangContent },
     set src(val) { this.srcLangContent = val },
 
     async translate() {
         if (this.src) {
             const { from, to } = this.autoDetect(this.src)
-            this.dest = await window.translateAPI.baidutrans(this.src, from, to)
+            this.dst = await window.translateAPI.baidutrans(this.src, from, to)
         } else {
-            this.dest = ""
+            this.dst = ""
         }
     },
 
@@ -42,7 +42,7 @@ export const translateState = reactive({
 
     clear() {
         this.src = ""
-        this.dest = ""
+        this.dst = ""
     }
 })
 

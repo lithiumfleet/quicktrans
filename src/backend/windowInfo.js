@@ -11,15 +11,14 @@ function getWindowInfo(event) {
     const width = wh[0]
     const height = wh[1]
 
-    const xy = reqWindow.getPosition()
-    const x = xy[0]
-    const y = xy[1]
-
+    const lefttop = reqWindow.getPosition()
+    const left = lefttop[0]
+    const top = lefttop[1]
     return {
+        left,
+        top,
         width,
-        height,
-        x,
-        y
+        height
     }
 }
 

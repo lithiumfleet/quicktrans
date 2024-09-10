@@ -1,24 +1,25 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { translateState } from './States'
+import { translateState, ocrZoneState } from './States'
 
 
 async function ocrFromWindow() {
-    await window.captureAPI.captureScreen('./temp.png')
+    await window.captureAPI.captureScreen('./thumbnail.png')
     const windowArea = await window.captureAPI.getWindowInfo()
     const targetArea = {
         left : windowArea.left,
         top : windowArea.top,
-        width : windowArea.width-19,
-        height : windowArea.height-26
+        width : ocrZoneState.width,
+        height : ocrZoneState.height
     }
-    return await window.captureAPI.areaOCR('./temp.png', targetArea)
+    return await window.captureAPI.areaOCR('./thumbnail.png', targetArea)
 }
 
 const openMenu = ref(false)
 async function toggleMenu() {
     openMenu.value = !openMenu.value
     translateState.dst = await ocrFromWindow()
+    ocrZoneState.update()
 }
 
 function close_window() {

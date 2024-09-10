@@ -1,13 +1,22 @@
 <script setup>
 import TranslateCard from './Component/TranslateCard.vue';
 import Menu from './Component/Menu.vue';
+import { onMounted } from 'vue';
+import { ocrZoneState } from './Component/States';
+
+onMounted(() => {
+  window.eventAPI.onWindowResize(() => {
+    ocrZoneState.update()
+  })
+  ocrZoneState.update() // Init for first time
+})
 
 </script>
 
 
 <template>
   <div class="main-page">
-    <TranslateCard></TranslateCard>
+    <TranslateCard class="translate-card"></TranslateCard>
     <div class="side-bar">
       <Menu class="setting"></Menu>
       <img class="drag-area" src="@imgs/drag-bar.png" />
@@ -20,7 +29,7 @@ import Menu from './Component/Menu.vue';
   display: flex;
   flex-direction: row;
   border: 0.1vh rgba(152, 98, 228, 0.73) solid;
-  min-height: 97vh;
+  height: 97vh;
 }
 .side-bar {
   display: flex;

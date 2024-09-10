@@ -68,3 +68,26 @@ function detectLanguage(text) {
     
     return dominantLanguage;
 }
+
+
+export const ocrZoneState = reactive({
+    ocrZoneWidth: 0,
+    ocrZoneHeight: 0,
+
+    get width() { return this.ocrZoneWidth },
+    set width(val) { this.ocrZoneWidth = val },
+    get height() { return this.ocrZoneHeight },
+    set height(val) { this.ocrZoneHeight = val },
+
+    setWH(width, height) { 
+        this.width = width
+        this.height = height
+    },
+
+    update() {
+        const element = document.getElementById("OCRZONE")
+        this.setWH(element.offsetWidth, element.offsetHeight)
+        console.log(`set ocr wh! ${this.width} ${this.height}`)
+    }
+
+})

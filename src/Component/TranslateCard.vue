@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-import { reactive, ref, watch, watchEffect } from 'vue';
 import { translateState } from './States';
-
-
 
 </script>
 
 <template>
     <div class="translate-card">
-        <div id="OCRZone" class="src-zone">  </div>
+        <div id="OCRZONE" class="src-zone"> </div>
         <div class="dst-zone"> {{ translateState.dst }} </div>
     </div>
 </template>
@@ -17,11 +14,13 @@ import { translateState } from './States';
 .translate-card {
     position: relative;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .src-zone {
-    position: absolute;
-    top: 0;
-    margin-bottom: 0;
+    flex-grow: 1;
+    overflow: auto;
 }
 .dst-zone {
     width: 100%;

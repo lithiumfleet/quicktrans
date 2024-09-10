@@ -17,7 +17,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
-    fullscreenable: false,
+    // fullscreenable: false,
     transparent: true
   });
 
@@ -27,6 +27,10 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
+
+  mainWindow.on('resized', () => {
+    mainWindow.webContents.send('window-resize')
+  })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

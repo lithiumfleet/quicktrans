@@ -22,6 +22,13 @@ contextBridge.exposeInMainWorld(
     {
         captureScreen: (img_path) => ipcRenderer.invoke("captureScreen", img_path),
         getWindowInfo: () => ipcRenderer.invoke("getWindowInfo"),
-        areaOCR: (file_path, area) => ipcRenderer.invoke("areaOCR", file_path, area)
+        areaOCR: (file_path, area) => ipcRenderer.invoke("areaOCR", file_path, area),
+    }
+)
+
+contextBridge.exposeInMainWorld(
+    'eventAPI',
+    {
+        onWindowResize: (updateCallback) => ipcRenderer.on("window-resize", (event) => updateCallback() )
     }
 )

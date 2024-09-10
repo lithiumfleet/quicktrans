@@ -4,7 +4,7 @@
 const { createWorker } = require('tesseract.js');
 
 let worker = undefined
-createWorker(['eng', 'chi_sim', 'jpn'])
+createWorker(['eng'])
     .then((newWorker) => worker=newWorker)
 
 // input: 

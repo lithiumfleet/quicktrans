@@ -6,7 +6,7 @@ import { translateState } from './States';
 <template>
     <div class="translate-card">
         <div id="OCRZONE" class="src-zone"> </div>
-        <div class="dst-zone"> {{ translateState.dst }} </div>
+        <div id="DSTZONE" class="dst-zone"> {{ translateState.dst }} </div>
     </div>
 </template>
 

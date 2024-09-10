@@ -14,7 +14,6 @@ app.whenReady().then(() => {
 })
 
 async function captureScreen(img_path) {
-    console.debug(`current screenshot size: ${screenWidth}, ${screenHeight}`, )
     const sources = await desktopCapturer.getSources(
         { 
             types: ['screen'],

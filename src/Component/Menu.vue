@@ -1,25 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { translateState, ocrZoneState } from './States'
+import { translateState } from './States'
+import { ocrFromWindow } from './ocr'
 
-
-async function ocrFromWindow() {
-    await window.captureAPI.captureScreen('./thumbnail.png')
-    const windowArea = await window.captureAPI.getWindowInfo()
-    const targetArea = {
-        left : windowArea.left,
-        top : windowArea.top,
-        width : ocrZoneState.width,
-        height : ocrZoneState.height
-    }
-    return await window.captureAPI.areaOCR('./thumbnail.png', targetArea)
-}
 
 const openMenu = ref(false)
 async function toggleMenu() {
     openMenu.value = !openMenu.value
     translateState.dst = await ocrFromWindow()
-    ocrZoneState.update()
 }
 
 function close_window() {
@@ -30,7 +18,7 @@ function close_window() {
 <template>
     <img 
         class="menu-icon"
-        :class="{ 'menu-icon-active':openMenu }"
+        :class="{ 'menu-icon-active':openMenu, 'menu-icon-deactive':!openMenu }"
         src="@imgs/setting.svg"
         @click="toggleMenu"
     />
@@ -44,7 +32,12 @@ function close_window() {
 }
 
 .menu-icon-active {
-    transform: rotate(1turn);
-    transition: transform 1s;
+    transform: rotate(0.75turn);
+    transition: transform 1.5s;
+}
+
+.menu-icon-deactive {
+    transform: rotate(-0.75turn);
+    transition: transform 1.5s;
 }
 </style>

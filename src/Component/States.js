@@ -85,8 +85,9 @@ export const ocrZoneState = reactive({
     },
 
     update() {
-        const element = document.getElementById("OCRZONE")
-        this.setWH(element.offsetWidth, element.offsetHeight)
+        const ocrZoneElement = document.getElementById("OCRZONE")
+        const dstzoneElement = document.getElementById("DSTZONE")
+        this.setWH(ocrZoneElement.offsetWidth, ocrZoneElement.offsetHeight - dstzoneElement.offsetHeight)
         console.log(`set ocr wh! ${this.width} ${this.height}`)
     }
 

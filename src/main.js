@@ -6,9 +6,11 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+let mainWindow = null
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 160,
     height: 48,
     minHeight: 48,
@@ -28,12 +30,8 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  mainWindow.on('resized', () => {
-    mainWindow.webContents.send('window-resize')
-  })
-
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -75,12 +73,26 @@ const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
 const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture')
 const getWindowInfo = require('D:/Quicktrans/quicktrans/src/backend/windowInfo')
 const areaOCR = require('D:/Quicktrans/quicktrans/src/backend/tesseractOCR')
-const openSettingPaddle = require('D:/Quicktrans/quicktrans/src/backend/openSettingPaddle')
+const { openSettingPaddle, settingPaddleIsOpening } = require('D:/Quicktrans/quicktrans/src/backend/openSettingPaddle')
+const notifySettingPaddleClosing = (event) => { 
+  console.debug("trigger notifySettingPaddleClosing handler")
+  mainWindow.webContents.send('setting-paddle-closing') 
+}
 
 // Add handlers for registed events here
+
+// translateAPI
 ipcMain.handle('baiduTrans', autoUnwarpArgs(baiduTrans))
+// captureAPI
 ipcMain.handle('captureScreen', autoUnwarpArgs(captureScreen))
 ipcMain.handle('getWindowInfo', getWindowInfo)
 ipcMain.handle('areaOCR', autoUnwarpArgs(areaOCR))
+// settingAPI
 ipcMain.handle('openSettingPaddle', autoUnwarpArgs(openSettingPaddle))
+ipcMain.handle('settingPaddleIsOpening', autoUnwarpArgs(settingPaddleIsOpening))
+
+// defined in main.js
+ipcMain.handle('settingPaddleIsClosing', notifySettingPaddleClosing)
+
+// window.<apigroup>.<apiname> is avaliable now :-)
 

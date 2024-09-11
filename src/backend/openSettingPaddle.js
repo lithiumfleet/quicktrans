@@ -1,14 +1,43 @@
 const { BrowserWindow } = require('electron')
-const path = require('node:path');
+const path = require('node:path')
 
-const openSettingPaddle = (base_url) => {
-  const settingWindow = new BrowserWindow({
+const settingPaddleState = {
+  translateBackend: 'baiduTrans',
+  from: 'auto',
+  to: 'auto',
+  ocrInterval: 1,
+  hotkey: undefined
+}
+
+let settingWindow = null
+let isOpening = false
+
+
+function settingPaddleIsOpening() {
+  return isOpening
+}
+
+
+function openSettingPaddle(base_url) {
+  if (settingWindow) {
+    settingWindow.focus()
+    return
+  }
+
+  settingWindow = new BrowserWindow({
     width: 300,
     height: 200,
     minWidth: 150,
     minHeight: 100,
-    frame: true,
+    frame: false,
     fullscreenable: false,
+    webPreferences: {
+      preload: path.join(__dirname, 'settingPaddlePreload.js'),
+    },
+  });
+
+  settingWindow.on('closed', () => {
+    settingWindow = null
   });
 
   const settingURL = new URL('setting', base_url)
@@ -17,4 +46,7 @@ const openSettingPaddle = (base_url) => {
   settingWindow.loadURL(settingURL.toString());
 };
 
-module.exports = openSettingPaddle
+
+
+exports.openSettingPaddle = openSettingPaddle
+exports.settingPaddleIsOpening = settingPaddleIsOpening

@@ -27,15 +27,10 @@ contextBridge.exposeInMainWorld(
 )
 
 contextBridge.exposeInMainWorld(
-    'eventAPI',
-    {
-        onWindowResize: (updateCallback) => ipcRenderer.on("window-resize", (event) => updateCallback() )
-    }
-)
-
-contextBridge.exposeInMainWorld(
     'settingAPI',
     {
+        onSettingPaddleIsClosing: (callback) => ipcRenderer.on('setting-paddle-closing', (_event) => callback()),
+        settingPaddleIsOpening: () => ipcRenderer.invoke("settingPaddleIsOpening"),
         openSettingPaddle: (base_url) => ipcRenderer.invoke("openSettingPaddle", base_url)
     }
 )

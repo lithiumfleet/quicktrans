@@ -5,14 +5,12 @@ import { ocrFromWindow } from './ocr'
 
 
 const openMenu = ref(false)
-async function toggleMenu() {
+async function openSettingPaddle() {
     openMenu.value = !openMenu.value
-    translateState.dst = await ocrFromWindow()
+    const base_url = window.location.origin
+    window.settingAPI.openSettingPaddle(base_url)
 }
 
-function close_window() {
-    window.close()
-}
 </script>
 
 <template>
@@ -20,7 +18,7 @@ function close_window() {
         class="menu-icon"
         :class="{ 'menu-icon-active':openMenu, 'menu-icon-deactive':!openMenu }"
         src="@imgs/setting.svg"
-        @click="toggleMenu"
+        @click="openSettingPaddle"
     />
 
 </template>

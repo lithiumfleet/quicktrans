@@ -32,3 +32,10 @@ contextBridge.exposeInMainWorld(
         onWindowResize: (updateCallback) => ipcRenderer.on("window-resize", (event) => updateCallback() )
     }
 )
+
+contextBridge.exposeInMainWorld(
+    'settingAPI',
+    {
+        openSettingPaddle: (base_url) => ipcRenderer.invoke("openSettingPaddle", base_url)
+    }
+)

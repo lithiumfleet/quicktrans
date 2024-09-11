@@ -2,19 +2,18 @@ import './index.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 
-import TranslateView from './Component/TranslateView.vue';
-import RewriteView from './Component/RewriteView.vue';
+import MainPage from '@src/Component/MainPage.vue';
+import SettingPaddle from '@src/Component/SettingPaddle.vue';
 
 const routes = [
-  { path: '/', component: TranslateView },
-  { path: '/translate', component: TranslateView },
-  { path: '/rewrite', component: RewriteView },
+  { path: '/', component: MainPage },
+  { path: '/setting', component: SettingPaddle }
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(), // not createMemoryHistory
   routes,
 })
 

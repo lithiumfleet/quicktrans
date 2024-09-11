@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, autoUpdater } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -75,10 +75,12 @@ const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
 const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture')
 const getWindowInfo = require('D:/Quicktrans/quicktrans/src/backend/windowInfo')
 const areaOCR = require('D:/Quicktrans/quicktrans/src/backend/tesseractOCR')
+const openSettingPaddle = require('D:/Quicktrans/quicktrans/src/backend/openSettingPaddle')
 
 // Add handlers for registed events here
 ipcMain.handle('baiduTrans', autoUnwarpArgs(baiduTrans))
 ipcMain.handle('captureScreen', autoUnwarpArgs(captureScreen))
 ipcMain.handle('getWindowInfo', getWindowInfo)
 ipcMain.handle('areaOCR', autoUnwarpArgs(areaOCR))
+ipcMain.handle('openSettingPaddle', autoUnwarpArgs(openSettingPaddle))
 

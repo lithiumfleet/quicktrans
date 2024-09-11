@@ -6,4 +6,4 @@ Still developping...
 # Todo
 
 - [ ] Use DBNet++ for detect texts
-- [ ] Use Tessercat for OCR
+- [x] Use Tessercat for OCR

@@ -1,16 +1,4 @@
-import { ref, reactive, watch } from "vue"
-
-export const readingFileState = reactive({
-    path: "",
-    content: "",
-    get_content() {
-        this.content = window.api.readfile(this.path)
-    },
-    clean() {
-        this.path = ""
-        this.content = ""
-    }
-})
+import { reactive } from "vue"
 
 export const translateState = reactive({
     srcLangContent: "",
@@ -24,7 +12,7 @@ export const translateState = reactive({
     async translate() {
         if (this.src) {
             const { from, to } = this.autoDetect(this.src)
-            this.dst = await window.translateAPI.baidutrans(this.src, from, to)
+            this.dst = await translateAPI.baidutrans(this.src, from, to)
         } else {
             this.dst = ""
         }

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { translateState } from './States'
-import { ocrFromWindow } from './ocr'
+import { ref } from 'vue'
 
+const isOpening = ref(false)
 
-const openMenu = ref(false)
+window.settingAPI.onSettingPaddleIsClosing(() => {isOpening.value = false})
+
 async function openSettingPaddle() {
-    openMenu.value = !openMenu.value
     const base_url = window.location.origin
     window.settingAPI.openSettingPaddle(base_url)
+    isOpening.value = true
 }
 
 </script>
@@ -16,7 +16,7 @@ async function openSettingPaddle() {
 <template>
     <img 
         class="menu-icon"
-        :class="{ 'menu-icon-active':openMenu, 'menu-icon-deactive':!openMenu }"
+        :class="{ 'menu-icon-active':isOpening, 'menu-icon-deactive':!isOpening}"
         src="@imgs/setting.svg"
         @click="openSettingPaddle"
     />

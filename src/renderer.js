@@ -8,8 +8,8 @@ import MainPage from '@src/Component/MainPage.vue';
 import SettingPaddle from '@src/Component/SettingPaddle.vue';
 
 const routes = [
-  { path: '/', component: MainPage },
-  { path: '/setting', component: SettingPaddle }
+  { path: '/main', component: MainPage },
+  { path: '/', component: SettingPaddle }
 ]
 
 const router = createRouter({

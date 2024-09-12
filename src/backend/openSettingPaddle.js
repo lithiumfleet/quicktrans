@@ -1,13 +1,6 @@
 const { BrowserWindow } = require('electron')
 const path = require('node:path')
 
-const settingPaddleState = {
-  translateBackend: 'baiduTrans',
-  from: 'auto',
-  to: 'auto',
-  ocrInterval: 1,
-  hotkey: undefined
-}
 
 let settingWindow = null
 

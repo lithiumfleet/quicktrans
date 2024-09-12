@@ -12,7 +12,7 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 160,
-    height: 48,
+    height: 200,
     minHeight: 48,
     minWidth: 80,
     frame: false,
@@ -20,7 +20,6 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
     // fullscreenable: false,
-    transparent: true
   });
 
   // and load the index.html of the app.
@@ -31,7 +30,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

@@ -12,15 +12,14 @@ function openSettingPaddle(base_url) {
   }
 
   settingWindow = new BrowserWindow({
-    width: 300,
-    height: 200,
-    minWidth: 150,
-    minHeight: 100,
+    width: 420,
+    height: 500,
     frame: false,
     fullscreenable: false,
     webPreferences: {
       preload: path.join(__dirname, 'settingPaddlePreload.js'),
     },
+    resizable: false
   });
 
   settingWindow.on('closed', () => {

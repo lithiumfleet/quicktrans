@@ -1,34 +1,23 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, toRaw } from 'vue';
 
-const settingPaddleState = reactive({
-    configFilePath: null,
-    translateBackend: null,
-
-    baiduTransAppId: null,
-    baiduTransApiKey: null,
-
-    rwkvModelPath: null,
-
-    from: 'auto',
-    to: 'auto',
-
-    tesseractModelPath: null,
-    ocrInterval: null,
-
-    readFromFile() {
-
-    },
-    writeToFile() {
-
-    }
+let defaultPaddleState = {}
+window.paddleAPI.recevConfigFromMain().then((data) => {
+    console.debug(data)
+    defaultPaddleState=data
 })
 
-function closeWindow() {
-    window.paddleAPI.settingPaddleIsClosing() // notify the main process
+const settingPaddleState = reactive(defaultPaddleState)
+
+async function closeWindow() {
+    await window.paddleAPI.settingPaddleIsClosing() // notify the main process
     console.debug('setting window closed mannully')
+    await window.paddleAPI.sendConfigToMain(toRaw(settingPaddleState))
     window.close()
 }
+
+
+// FIXME: font not bind to settingPaddleState
 
 </script>
 
@@ -49,7 +38,7 @@ function closeWindow() {
             </div>
         </fieldset>
 
-        <fieldset v-if="settingPaddleState.translateBackend!==null" class="backend-setting">
+        <fieldset v-if="settingPaddleState.translateBackend!==null && settingPaddleState.translateBackend!==undefined" class="backend-setting">
             <legend>Backend setting</legend>
             <div v-if="settingPaddleState.translateBackend==='baiduTrans'" class="input-setting">
                 <div>

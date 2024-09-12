@@ -12,13 +12,14 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 160,
-    height: 200,
-    minHeight: 48,
+    height: 48,
     minWidth: 80,
+    minHeight: 48,
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+    transparent: true,
     // fullscreenable: false,
   });
 
@@ -58,6 +59,31 @@ app.on('window-all-closed', () => {
 });
 
 
+// Settings (same as SettingPaddle.vue)
+const userConfig = {
+    translateBackend: null,
+    baiduTransAppId: null,
+    baiduTransApiKey: null,
+    rwkvModelPath: null,
+    from: 'auto',
+    to: 'auto',
+    tesseractModelPath: null,
+    ocrInterval: null,
+}
+
+function updateConfig(newConfig) {
+  for (let key in newConfig) {
+    if (userConfig.hasOwnProperty(key)) {
+        userConfig[key] = newConfig[key];
+      }
+  }
+  console.debug(userConfig)
+}
+
+function sendConfig() {
+  return userConfig
+}
+
 // Handler warpper
 function autoUnwarpArgs(fn) {
   // wapper: auto unwarp args
@@ -66,9 +92,16 @@ function autoUnwarpArgs(fn) {
   }
   return handler
 }
+function autoUnwarpArgsWithConfig(fn, config) {
+  // wapper: auto unwarp args, and add a config object
+  function handler(event, ...args) {
+    return fn(config, ...args)
+  }
+  return handler
+}
 
 // Regist functions in preload.js first!
-const baiduTrans = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
+const { sendBaiduTransWithConfig } = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
 const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture')
 const getWindowInfo = require('D:/Quicktrans/quicktrans/src/backend/windowInfo')
 const areaOCR = require('D:/Quicktrans/quicktrans/src/backend/tesseractOCR')
@@ -81,7 +114,7 @@ const notifySettingPaddleClosing = (event) => {
 // Add handlers for registed events here
 
 // translateAPI
-ipcMain.handle('baiduTrans', autoUnwarpArgs(baiduTrans))
+ipcMain.handle('baiduTrans', autoUnwarpArgsWithConfig(sendBaiduTransWithConfig))
 // captureAPI
 ipcMain.handle('captureScreen', autoUnwarpArgs(captureScreen))
 ipcMain.handle('getWindowInfo', getWindowInfo)
@@ -91,6 +124,11 @@ ipcMain.handle('openSettingPaddle', autoUnwarpArgs(openSettingPaddle))
 
 // defined in main.js
 ipcMain.handle('settingPaddleIsClosing', notifySettingPaddleClosing)
+
+// paddleAPI from settingPaddlePreload.js
+// defined in main.js
+ipcMain.handle('recevConfigFromMain', sendConfig)
+ipcMain.handle('sendConfigToMain', autoUnwarpArgs(updateConfig))
 
 // window.<apigroup>.<apiname> is avaliable now :-)
 

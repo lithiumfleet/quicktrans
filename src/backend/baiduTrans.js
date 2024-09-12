@@ -38,4 +38,8 @@ async function sendBaiduTrans(q, from, to) {
     return dest
 }
 
-module.exports = sendBaiduTrans;
+async function sendBaiduTransWithConfig(config, q) {
+    return await sendBaiduTrans(q, config.from, config.to)
+}
+
+exports = { sendBaiduTrans, sendBaiduTransWithConfig }

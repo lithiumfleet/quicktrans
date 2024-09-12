@@ -30,12 +30,12 @@ async function openSettingPaddle() {
 }
 
 .menu-icon-active {
-    transform: rotate(0.75turn);
-    transition: transform 1.5s;
+    transform: rotate(1.25turn);
+    transition: transform 2s;
 }
 
 .menu-icon-deactive {
-    transform: rotate(-0.75turn);
-    transition: transform 1.5s;
+    transform: rotate(-1.25turn);
+    transition: transform 2s;
 }
 </style>

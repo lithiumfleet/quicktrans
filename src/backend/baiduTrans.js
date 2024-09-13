@@ -42,4 +42,5 @@ async function sendBaiduTransWithConfig(config, q) {
     return await sendBaiduTrans(q, config.from, config.to)
 }
 
-exports = { sendBaiduTrans, sendBaiduTransWithConfig }
+exports.sendBaiduTrans = sendBaiduTrans
+exports.sendBaiduTransWithConfig = sendBaiduTransWithConfig 

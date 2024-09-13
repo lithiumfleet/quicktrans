@@ -61,7 +61,7 @@ app.on('window-all-closed', () => {
 
 // Settings (same as SettingPaddle.vue)
 const userConfig = {
-    translateBackend: null,
+    translateBackend: 'baiduTrans',
     baiduTransAppId: null,
     baiduTransApiKey: null,
     rwkvModelPath: null,
@@ -88,16 +88,17 @@ function autoUnwarpArgs(fn) {
   }
   return handler
 }
-function autoUnwarpArgsWithConfig(fn, config) {
-  // wapper: auto unwarp args, and add a config object
+function autoUnwarpArgsWithConfig(fn) {
+  // wapper: auto unwarp args, and add a userConfig
   function handler(event, ...args) {
-    return fn(config, ...args)
+    return fn(userConfig, ...args)
   }
   return handler
 }
 
 // Regist functions in preload.js first!
 const { sendBaiduTransWithConfig } = require('D:/Quicktrans/quicktrans/src/backend/baiduTrans.js')
+const translate = require('D:/Quicktrans/quicktrans/src/backend/transInterface.js')
 const captureScreen = require('D:/Quicktrans/quicktrans/src/backend/desktopCapture')
 const getWindowInfo = require('D:/Quicktrans/quicktrans/src/backend/windowInfo')
 const areaOCR = require('D:/Quicktrans/quicktrans/src/backend/tesseractOCR')
@@ -111,6 +112,7 @@ const notifySettingPaddleClosing = (event) => {
 
 // translateAPI
 ipcMain.handle('baiduTrans', autoUnwarpArgsWithConfig(sendBaiduTransWithConfig))
+ipcMain.handle('translate', autoUnwarpArgsWithConfig(translate)) 
 // captureAPI
 ipcMain.handle('captureScreen', autoUnwarpArgs(captureScreen))
 ipcMain.handle('getWindowInfo', getWindowInfo)

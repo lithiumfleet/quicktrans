@@ -13,7 +13,8 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld(
     'translateAPI',
     {
-        baidutrans: (p, from, to) => ipcRenderer.invoke("baiduTrans", p, from, to)
+        baidutrans: (p, from, to) => ipcRenderer.invoke("baiduTrans", p, from, to),
+        translate: (p) => ipcRenderer.invoke("translate", p),
     }
 )
 

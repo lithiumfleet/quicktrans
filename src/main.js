@@ -72,11 +72,7 @@ const userConfig = {
 }
 
 function updateConfig(newConfig) {
-  for (let key in newConfig) {
-    if (userConfig.hasOwnProperty(key)) {
-        userConfig[key] = newConfig[key];
-      }
-  }
+  Object.assign(userConfig, newConfig)
   console.debug(userConfig)
 }
 

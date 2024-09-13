@@ -1,13 +1,15 @@
 <script lang="ts" setup>
-import { reactive, toRaw } from 'vue';
+import { onMounted, reactive, ref, toRaw } from 'vue';
 
-let defaultPaddleState = {}
-window.paddleAPI.recevConfigFromMain().then((data) => {
-    console.debug(data)
-    defaultPaddleState=data
+
+const settingPaddleState = reactive({})
+
+onMounted(() => {
+    window.paddleAPI.recevConfigFromMain().then((defaultStateFromMain) => {
+        console.debug(defaultStateFromMain)
+        Object.assign(settingPaddleState, defaultStateFromMain)
+    })
 })
-
-const settingPaddleState = reactive(defaultPaddleState)
 
 async function closeWindow() {
     await window.paddleAPI.settingPaddleIsClosing() // notify the main process
@@ -17,7 +19,7 @@ async function closeWindow() {
 }
 
 
-// FIXME: font not bind to settingPaddleState
+// TODO: check inputs while blur
 
 </script>
 

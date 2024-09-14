@@ -4,7 +4,7 @@
 const { createWorker } = require('tesseract.js');
 
 let worker = undefined
-createWorker(['eng'])
+createWorker(['eng', 'jpn', 'chi_sim']) // model name: https://github.com/naptha/tesseract.js/blob/master/src/constants/languages.js
     .then((newWorker) => worker=newWorker)
 
 // input: 
@@ -14,7 +14,9 @@ createWorker(['eng'])
 //           you may need ocrZoneState.getArea() to get area
 // output: string
 async function areaOCR(file_path, area) {
+    console.debug(`tesseract receive area: ${JSON.stringify(area)}`)
     const { data: { text } } = await worker.recognize(file_path, { rectangle: area })
+    console.debug(`tesseract recognize result: ${text}`)
     return text
 }
 

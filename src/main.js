@@ -68,7 +68,7 @@ const userConfig = {
     from: 'auto',
     to: 'auto',
     tesseractModelPath: null,
-    ocrInterval: null,
+    ocrInterval: 600,
 }
 
 function updateConfig(newConfig) {

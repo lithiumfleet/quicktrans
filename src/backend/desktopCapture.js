@@ -1,5 +1,5 @@
 const { desktopCapturer, app } = require('electron')
-const fs = require('fs')
+const fs = require('fs').promises
 
 
 let screenWidth = screenHeight = 0
@@ -14,6 +14,7 @@ app.whenReady().then(() => {
 })
 
 async function captureScreen(img_path) {
+    // consume <= 600ms
     const sources = await desktopCapturer.getSources(
         { 
             types: ['screen'],
@@ -24,7 +25,7 @@ async function captureScreen(img_path) {
 
     const img = source.thumbnail.toPNG()
 
-    fs.writeFileSync(img_path, img)
+    await fs.writeFile(img_path, img)
 }
 
 module.exports = captureScreen

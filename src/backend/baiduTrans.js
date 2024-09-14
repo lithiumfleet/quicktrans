@@ -24,9 +24,14 @@ function new_request(q, from, to) {
     return request
 }
 
-
+function isEmpty(str) {
+    return str.trim().length === 0;
+}
 
 async function sendBaiduTrans(q, from, to) {
+    console.debug(`${__filename} q: ${q}\n`)
+    if (isEmpty(q)) return ""
+
     let request = new_request(q, from, to)
     let resp = await fetch(
         "https://fanyi-api.baidu.com/api/trans/vip/translate",
@@ -34,8 +39,10 @@ async function sendBaiduTrans(q, from, to) {
     )
     let data = await resp.json()
 
-    let dest = data.trans_result[0].dst
-    return dest
+    let dst = data.trans_result
+                .map(line => line.dst)
+                .join('\n')
+    return dst
 }
 
 async function sendBaiduTransWithConfig(config, q) {

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { translateState, ocrZoneState } from './States';
 
-
+// about 600ms
 async function refreshOCRTrans() {
-    await window.captureAPI.captureScreen('./thumbnail.png')
+    await window.captureAPI.captureScreen('./thumbnail.png') // time consuming
     const area = await ocrZoneState.getArea()
     translateState.src = await window.captureAPI.areaOCR('./thumbnail.png', area)
     console.debug(`ocr output: ${translateState.src}`)
@@ -11,6 +11,11 @@ async function refreshOCRTrans() {
     console.debug(`translate output: ${translateState.dst}`)
 }
 
+setInterval(async () => {
+    console.debug('auto ocr translate')
+    await refreshOCRTrans()
+}, 5600)
+// settingPaddleState.ocrInterval
 
 
 </script>

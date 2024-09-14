@@ -42,9 +42,11 @@ export const ocrZoneState = reactive({
         return {
             left: this.ocrZoneLeft,
             top: this.ocrZoneTop,
-            width: this.ocrZoneWidth,
-            height: this.ocrZoneHeight
+            width: this.ocrZoneWidth>=1 ? this.ocrZoneWidth : 1,
+            height: this.ocrZoneHeight>=1 ? this.ocrZoneHeight : 1
         }
     }
 
 })
+
+export const settingPaddleState = reactive({})

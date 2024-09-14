@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRaw } from 'vue';
+import { settingPaddleState } from './States';
 
-
-const settingPaddleState = reactive({})
 
 onMounted(() => {
     window.paddleAPI.recevConfigFromMain().then((defaultStateFromMain) => {

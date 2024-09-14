@@ -5,5 +5,5 @@ Still developping...
 
 # Todo
 
-- [ ] Use DBNet++ for detect texts
 - [x] Use Tessercat for OCR
+- [ ] rwkv translate backend

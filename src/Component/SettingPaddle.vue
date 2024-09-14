@@ -3,13 +3,6 @@ import { onMounted, reactive, ref, toRaw } from 'vue';
 import { settingPaddleState } from './States';
 
 
-onMounted(() => {
-    window.paddleAPI.recevConfigFromMain().then((defaultStateFromMain) => {
-        console.debug(defaultStateFromMain)
-        Object.assign(settingPaddleState, defaultStateFromMain)
-    })
-})
-
 async function closeWindow() {
     await window.paddleAPI.settingPaddleIsClosing() // notify the main process
     console.debug('setting window closed mannully')
@@ -26,6 +19,17 @@ async function closeWindow() {
     <img class="exit" src="@imgs/close-window.svg" @click="closeWindow"></img>
     <div class="setting-page">
         <div class="page-title"> SETTING PAGE </div>
+
+        <fieldset class="choose-trigger-type">
+            <legend>Choose trigger type</legend>
+            <div>Mannul</div>
+            <div class="switch-auto-mannul">
+                <input type="checkbox" id="toggle" v-model="settingPaddleState.enableAutoOCRTrans"/>
+                <label for="toggle" class="slider"></label>
+            </div>
+            <div>Auto</div>
+        </fieldset>
+
 
         <fieldset class="choose-backend">
             <legend>Choose a backend</legend>
@@ -121,12 +125,64 @@ async function closeWindow() {
     text-align: center;
     -webkit-app-region: drag;
 }
+.choose-trigger-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+}
+.switch-auto-mannul {
+  position: relative;
+  width: 2em;
+  height: 1em;
+}
+
+.switch-auto-mannul input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+border-radius: 1em
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 0.9em;
+  width: 0.9em;
+  left: 0.1em;
+  bottom: 0.1em;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(1em);
+}
+
 .setting-page {
     display: flex;
     flex-direction: column;
+    margin-left: 1.8em;
 }
 .setting-page > * {
     margin: 0.4em;
+        
 }
 .exit {
     cursor: pointer;

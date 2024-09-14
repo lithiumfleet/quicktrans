@@ -61,6 +61,7 @@ app.on('window-all-closed', () => {
 
 // Settings (same as SettingPaddle.vue)
 const userConfig = {
+    enableAutoOCRTrans: false,
     translateBackend: 'baiduTrans',
     baiduTransAppId: null,
     baiduTransApiKey: null,

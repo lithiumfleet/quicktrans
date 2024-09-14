@@ -1,4 +1,4 @@
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 
 export const translateState = reactive({
     srcLangContent: "",
@@ -49,4 +49,4 @@ export const ocrZoneState = reactive({
 
 })
 
-export const settingPaddleState = reactive({})
+export const settingPaddleState = reactive({}) // init from main when app.vue mounted

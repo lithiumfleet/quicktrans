@@ -13,7 +13,7 @@ function openSettingPaddle(base_url) {
 
   settingWindow = new BrowserWindow({
     width: 420,
-    height: 500,
+    height: 600,
     frame: false,
     fullscreenable: false,
     webPreferences: {

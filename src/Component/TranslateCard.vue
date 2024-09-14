@@ -1,21 +1,23 @@
 <script lang="ts" setup>
-import { translateState, ocrZoneState } from './States';
+import { watch, onBeforeUnmount  } from 'vue';
+import { translateState, settingPaddleState } from './States';
+import { refreshOCRTrans } from './ocrTrans';
 
-// about 600ms
-async function refreshOCRTrans() {
-    await window.captureAPI.captureScreen('./thumbnail.png') // time consuming
-    const area = await ocrZoneState.getArea()
-    translateState.src = await window.captureAPI.areaOCR('./thumbnail.png', area)
-    console.debug(`ocr output: ${translateState.src}`)
-    translateState.dst = await window.translateAPI.translate(translateState.src)
-    console.debug(`translate output: ${translateState.dst}`)
-}
+let intervalId = null;
 
-setInterval(async () => {
-    console.debug('auto ocr translate')
-    await refreshOCRTrans()
-}, 5600)
-// settingPaddleState.ocrInterval
+ // use getter function in watch. if pass directly watch will receive a primitive value, not a reactive property.
+watch(() => settingPaddleState.enableAutoOCRTrans, (enableAuto) => { // FIXME: watch not work
+  if (enableAuto) {
+    intervalId = setInterval(async () => {
+      console.debug('auto ocr translate mode');
+      await refreshOCRTrans();
+    }, settingPaddleState.ocrInterval);
+  } else {
+    console.debug('mannul ocr translate mode');
+    if (intervalId !== null) { clearInterval(intervalId); }
+    intervalId = null;
+  }
+});
 
 
 </script>

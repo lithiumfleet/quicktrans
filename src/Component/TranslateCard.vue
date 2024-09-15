@@ -1,23 +1,6 @@
 <script lang="ts" setup>
-import { watch, onBeforeUnmount  } from 'vue';
-import { translateState, settingPaddleState } from './States';
+import { translateState } from './States';
 import { refreshOCRTrans } from './ocrTrans';
-
-let intervalId = null;
-
- // use getter function in watch. if pass directly watch will receive a primitive value, not a reactive property.
-watch(() => settingPaddleState.enableAutoOCRTrans, (enableAuto) => { // FIXME: watch not work
-  if (enableAuto) {
-    intervalId = setInterval(async () => {
-      console.debug('auto ocr translate mode');
-      await refreshOCRTrans();
-    }, settingPaddleState.ocrInterval);
-  } else {
-    console.debug('mannul ocr translate mode');
-    if (intervalId !== null) { clearInterval(intervalId); }
-    intervalId = null;
-  }
-});
 
 
 </script>

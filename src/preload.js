@@ -31,6 +31,7 @@ contextBridge.exposeInMainWorld(
     'settingAPI',
     {
         onSettingPaddleIsClosing: (callback) => ipcRenderer.on('setting-paddle-closing', (_event) => callback()),
-        openSettingPaddle: (base_url) => ipcRenderer.invoke("openSettingPaddle", base_url)
+        openSettingPaddle: (base_url) => ipcRenderer.invoke("openSettingPaddle", base_url),
+        recevConfigFromMain: () => ipcRenderer.invoke('recevConfigFromMain')
     }
 )

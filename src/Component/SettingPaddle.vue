@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRaw } from 'vue';
-import { settingPaddleState } from './States';
-
+import { onMounted, toRaw } from 'vue';
+import { settingPaddleState, syncSettingPaddleStateWithMain } from './States';
 
 async function closeWindow() {
     await window.paddleAPI.settingPaddleIsClosing() // notify the main process
@@ -9,6 +8,10 @@ async function closeWindow() {
     await window.paddleAPI.sendConfigToMain(toRaw(settingPaddleState))
     window.close()
 }
+
+onMounted(async () => {
+    await syncSettingPaddleStateWithMain()
+})
 
 
 // TODO: check inputs while blur
@@ -34,7 +37,7 @@ async function closeWindow() {
         <fieldset class="choose-backend">
             <legend>Choose a backend</legend>
             <div>
-                <input id="baiduTrans" type="radio" name="backend" value="baiduTrans" v-model="settingPaddleState.translateBackend" checked />
+                <input id="baiduTrans" type="radio" name="backend" value="baiduTrans" v-model="settingPaddleState.translateBackend"/>
                 <label for="baiduTrans">baiduTrans</label>
             </div>
             <div>
@@ -68,7 +71,7 @@ async function closeWindow() {
             <label>from</label>
             <div class="tasks">
                 <div>
-                    <input id="auto" type="radio" name="from" value="auto" v-model="settingPaddleState.from" checked/>
+                    <input id="auto" type="radio" name="from" value="auto" v-model="settingPaddleState.from"/>
                     <label for="auto">auto</label>
                 </div>
                 <div>
@@ -87,7 +90,7 @@ async function closeWindow() {
             <label>to</label>
             <div class="tasks">
                 <div>
-                    <input id="auto" type="radio" name="to" value="auto" v-model="settingPaddleState.to" checked/>
+                    <input id="auto" type="radio" name="to" value="auto" v-model="settingPaddleState.to"/>
                     <label for="auto">auto</label>
                 </div>
                 <div>
@@ -109,7 +112,7 @@ async function closeWindow() {
             <legend>OCR setting</legend>
             <div>
                 <label for="ocr-interval">OCR Interval(s)</label>
-                <input id="ocr-interval" type="number" v-model="settingPaddleState.ocrInterval" min="0.1" max="5" placeholder="default 0.6"/>
+                <input id="ocr-interval" type="number" v-model="settingPaddleState.ocrInterval" placeholder="default 3600ms"/>
             </div>
             <div>
                 <label for="tesseract-model-path">Tesseract model path</label>

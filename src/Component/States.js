@@ -49,4 +49,10 @@ export const ocrZoneState = reactive({
 
 })
 
-export const settingPaddleState = reactive({}) // init from main when app.vue mounted
+export const settingPaddleState = reactive({})
+
+export async function syncSettingPaddleStateWithMain() {
+    await window.settingAPI.recevConfigFromMain().then((stateFromMain) => {
+        Object.assign(settingPaddleState, stateFromMain)
+    })
+}
